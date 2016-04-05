@@ -5,23 +5,28 @@ var app = angular.module("docsSimpleDirective", [])
 
     }])
     .directive("myDirective", function() {
-
+        // setup the categories, identify the rows of data, and init my data obj
         var categories = chunk3[0];
-        var records = _.tail(chunk3);
+        var records = _.tail(chunk3); // underscore method to grab all arrays except for the first
         var dataObj = {};
-        var html = "";
+        var html = ""; //this will be our output html
 
         for (var i = records.length - 1; i >= 0; i--) {
-
+            //pick a record randomly
             // var rand = Math.floor((Math.random() * records.length));
+            
+            // pick a record
             var entry = records[i];
-
+            
             _(categories).forEach(function(val) {
+                //set the index so we know which col we're in
                 var ind = categories.indexOf(val);
+                //store the value in dataObj with the column set as the key of this object
                 dataObj[val] = entry[ind].toString();
             });
             // console.log(dataObj);
-
+            
+            //add the dataObject to the html
             var markup = "<div class='myCard'>";
             for (var key in dataObj) {
                 markup += key + ": " + dataObj[key] + "<br>"
@@ -32,7 +37,7 @@ var app = angular.module("docsSimpleDirective", [])
             html += markup;
         }
 
-
+        
         return {
             // template: "Name: {{customer.name}} <br> Address: {{customer.address}}"
 
